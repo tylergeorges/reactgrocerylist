@@ -3,10 +3,12 @@ console.table(products)
 class App extends React.Component{
 
     state = {
-        products: products,
-        name: '',
-        price: 0,
-        description: '',
+        products: products, 
+        "item": ' ',
+        "brand": '',
+        "units": '',
+        "quantity": 0,
+        "purchased": '',
         shoppingCart: []
     }
 
@@ -21,8 +23,8 @@ class App extends React.Component{
         e.preventDefault()
         const newProduct ={
             name: this.state.productName,
-            price: this.state.price,
-            description: this.state.description
+            quantity: this.state.quantity,
+            purchased: this.state.isPurchased
         }       
 
         this.setState({products:[newProduct, ...this.state.products]})
@@ -39,24 +41,24 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <h1>React State Store</h1>
+                <h1>React Groceries</h1>
 
                 <form onSubmit={this.handleSubmit}>
 
-                    <label htmlFor="productName">Product Name</label>
-                    <input type='text' value={this.state.productName} name='productName' 
+                    <label htmlFor="item">Item</label>
+                    <input type='text' value={this.state.item} name='item' 
                     onChange = {this.handleChange}/>
 
                     <br/>
 
-                    <label htmlFor="price">Price</label>
-                    <input type='number' value={this.state.price} name='price' 
+                    <label htmlFor="quantity">Price</label>
+                    <input type='number' value={this.state.quantity} name='quantity' 
                     onChange = {this.handleChange}/>
 
                     <br/>
 
-                    <label htmlFor="description">Description</label>
-                    <input type='text' value={this.state.description} name='description' 
+                    <label htmlFor="purchased">Purchased</label>
+                    <input type='boolean' value={this.state.description} name='purchased' 
                     onChange = {this.handleChange}/>
                     
                     <br/>
@@ -67,9 +69,9 @@ class App extends React.Component{
 
                 <div style={{border: '2px solid'}}>
                     <h1>Product Details</h1>
-                    <h2>{this.state.productName}</h2>
-                    <h3>${this.state.price}</h3>
-                    <h4>{this.state.description}</h4>
+                    <h2>{this.state.item}</h2>
+                    <h3>${this.state.quantity}</h3>
+                    <h4>{this.state.purchased}</h4>
                 </div>
 
                 <ul>
@@ -94,8 +96,8 @@ class Product extends React.Component{
         return(
 
            <ul>
-               <li key={this.props.item.name} onClick={ () => this.props.addToCart(this.props.item)}>
-                {this.props.item.name} - $ {this.props.item.price} - {this.props.item.description}
+               <li key={this.props.item.item} onClick={ () => this.props.addToCart(this.props.item)}>
+                {this.props.item.item} -  Quantity: {this.props.item.quantity} 
                </li>
               
            </ul>
@@ -110,7 +112,7 @@ class ShoppingCart extends React.Component{
                 <h1>Shopping Cart</h1>
 
                 <ul>
-                    {this.props.cartItems.map(item =>  <li>{item.name} - {item.price}</li>)}
+                    {this.props.cartItems.map(item =>  <li>{item.item} - {item.purchased}</li>)}
                 </ul>
             </div>
         )
